@@ -1,0 +1,49 @@
+dcr app bin/rails generate model Patient name:string
+dcr app bin/rails generate controller Patients
+resources :patients
+
+
+dcr app bin/rails generate model Laboratory name
+
+dcr app bin/rails generate migration add_laboratory_reference_to_patients laboratory:references
+dcr app bin/rails generate migration add_laboratory_reference_to_users laboratory:references
+
+dcr app bin/rails generate controller Pages home
+
+dcr app bin/rails generate model PatientTest patient:references testname:string
+add later when need be - add_index :patient_tests, [:date, :quote_id], unique: true ###
+
+dcr app bin/rails generate controller PatientTests new create 
+
+# dcr app bin/rails generate model PatientInquest patient_test:references inquest_name:string
+dcr app bin/rails g model PatientInquest patient_test:references inquest_name:string description:text nvalue:string result:string 
+
+dcr app bin/rails generate controller PatientInquests show new create delete edit update
+
+
+quantity - result
+unit_price - nvalue
+
+
+dcr app bin/rails generate model Test laboratory:references tname:string
+
+dcr app bin/rails generate controller Tests index new create show edit update destroy
+
+dcr app bin/rails g model Inquest test:references iname:string idescription:text invalue:string iresult:string 
+
+dcr app bin/rails generate controller Inquests new create edit update destroy
+
+
+
+<div>
+  <%= form.label :phone_number, style: "display: block" %>
+  <%= form.text_field :phone_number, list: 'phone_numbers'%>
+  <datalist id='phone_numbers'>
+    <% User.pluck(:phone_number).each do |phone_number|%>
+      <option value=<%=phone_number%>></option>
+    <%end%>
+ </datalist>
+</div>
+
+
+dcr app yarn add stimulus-autocomplete

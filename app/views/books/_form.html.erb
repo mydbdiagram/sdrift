@@ -1,0 +1,42 @@
+<%= form_with(model: book) do |form| %>
+  <% if book.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+        <% book.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :publish_year, style: "display: block" %>
+    <%= form.number_field :publish_year %>
+  </div>
+
+  <div>
+    <%= form.label :author_id, style: "display: block" %>
+    <%= content_tag :div, data: { controller: 'autocomplete', "autocomplete-url": authors_path } do %>
+      <%= text_field_tag :author, book.author_name, 'data-autocomplete-target': 'input', class: 'form-control' %>
+      <%= form.hidden_field :author_id, 'data-autocomplete-target': 'hidden' %>
+      <%= tag :ul, 'data-autocomplete-target': 'results' , class: 'autocomplete' %>
+    <% end %>
+  </div>
+data-autocomplete-target="results"
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<% @authors.each do |author| %>
+  <p>
+    <%= author.name %>
+  </p>
+<% end %>
